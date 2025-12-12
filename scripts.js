@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 1. Datos de la Galería (¡AQUÍ MODIFICAS TUS IMÁGENES/GIFS!) ---
     const galleryItems = [
         { src: 'https://i.ibb.co/whdzYdDc/aracely-1.gif',},
-        { src: 'https://iili.io/f5mJKZb.gif'},
-        { src: 'https://iili.io/f5mjZnp.gif'},
+        { src: 'https://i.ibb.co/kgGsfnWD/pcback-viviana.gif'},
+        { src: 'https://i.ibb.co/GQ6GmDCc/fonodochimi.gif'},
         { src: 'https://iili.io/f5mXkRj.gif'},
         { src: 'https://iili.io/f5pPDdJ.gif',},
         { src: 'https://iili.io/f5bZgtV.gif',}
