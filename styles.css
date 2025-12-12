@@ -1,0 +1,647 @@
+/* --- 1. Variables y Reset (Modo Oscuro/Innovador) --- */
+:root {
+    --bg-dark: #1e1e2f; /* Fondo principal oscuro (Azul/Negro) */
+    --card-bg: #27293d; /* Fondo de tarjetas un poco más claro */
+    --accent-color: #00ffc4; /* Color de acento Neón/Ciberpunk */
+    --text-light: #f0f0f0;
+    --text-muted: #a0a0b0;
+    --border-radius: 10px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinear arriba para contenido largo */
+    padding: 40px 20px;
+}
+
+
+/* --- 2. Fondo Dinámico (Efecto de Cuadrícula 3D Animada) --- */
+.background-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--bg-dark); /* Asegura que el color base sea oscuro */
+    overflow: hidden; /* Oculta cualquier desbordamiento de las cuadrículas */
+    opacity: 1;
+}
+
+/* 2.1. Capa de Cuadrícula Profunda (más tenue) */
+.background-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Crea la cuadrícula con un gradiente repetido */
+    background-image: 
+        linear-gradient(to right, rgba(0, 255, 196, 0.05) 1px, transparent 1px), 
+        linear-gradient(to bottom, rgba(0, 255, 196, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px; /* Tamaño de cada celda de la cuadrícula */
+    animation: moveGrid 30s linear infinite; /* Animación lenta */
+    opacity: 0.5;
+    transform: perspective(500px) rotateX(70deg) translateY(0);
+}
+
+/* 2.2. Capa de Cuadrícula Media (más visible y rápida) */
+.background-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Crea la cuadrícula con el mismo diseño, pero más fuerte */
+    background-image: 
+        linear-gradient(to right, rgba(0, 255, 196, 0.1) 1px, transparent 1px), 
+        linear-gradient(to bottom, rgba(0, 255, 196, 0.1) 1px, transparent 1px);
+    background-size: 100px 100px; /* Celdas más grandes */
+    animation: moveGrid 15s linear infinite; /* Animación más rápida */
+    opacity: 0.7;
+    transform: perspective(600px) rotateX(75deg) translateY(0);
+}
+
+/* Keyframes: Mueve las cuadrículas "hacia el usuario" */
+@keyframes moveGrid {
+    0% {
+        background-position: 0 0;
+        transform: perspective(600px) rotateX(70deg) translateY(0);
+    }
+    100% {
+        /* Mueve el fondo para simular el movimiento hacia adelante */
+        background-position: 0 1000px; 
+        transform: perspective(600px) rotateX(70deg) translateY(100px);
+    }
+}
+
+/* --- 3. Contenedor Principal --- */
+.profile-container {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+/* --- 4. Header y Perfil Principal --- */
+.main-header {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 196, 0.2); /* Borde sutil */
+}
+
+.profile-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(0, 255, 196, 0.5); /* Resplandor */
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    color: var(--accent-color);
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color var(--transition-speed);
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+/* --- 5. Estilos de las Secciones de Contenido --- */
+.content-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.card-section {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-left: 5px solid var(--accent-color); /* Indicador de sección */
+    transition: transform var(--transition-speed);
+}
+
+.card-section:hover {
+    transform: translateY(-5px); /* Efecto hover innovador */
+}
+
+.card-section h2 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.card-section h2 i {
+    margin-right: 10px;
+}
+
+.card-section p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* --- 6. Botones de Acción --- */
+.btn-action {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: var(--accent-color);
+    color: var(--bg-dark);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity var(--transition-speed), background-color var(--transition-speed);
+}
+
+.btn-action:hover {
+    opacity: 0.8;
+    background-color: #00e0b4;
+}
+
+.btn-action i {
+    margin-left: 5px;
+}
+
+.btn-action.secondary {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.btn-action.secondary:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-dark);
+    opacity: 1;
+}
+
+/* --- 7. Sección de Radio (Anteriormente Video) --- */
+.video-responsive {
+    position: relative;
+    /* CLAVE: Eliminamos el padding que forzaba el tamaño (16:9 o 100%) */
+    padding-bottom: 0; 
+    height: auto; /* Permitir que la altura se ajuste al contenido (el iframe) */
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.video-responsive iframe {
+    /* Usamos posición relativa para que el flujo normal funcione */
+    position: relative; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* CORRECCIÓN: Usamos 100% para tomar la altura del contenedor, que se ajusta a los 170px del HTML */
+    height: 100%; 
+    border: none;
+}
+
+/* --- 8. Sección de Fotos (Galería) --- */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: transform var(--transition-speed);
+}
+
+.photo-grid img:hover {
+    transform: scale(1.05);
+    z-index: 10;
+}
+
+/* --- 9. Sección de Amigos/Colaboradores --- */
+.friend-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.friend-badge {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-light);
+    background-color: #383a54; /* Fondo para el badge */
+    padding: 5px 15px 5px 5px;
+    border-radius: 50px;
+    transition: background-color var(--transition-speed);
+}
+
+.friend-badge:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-dark);
+}
+
+.friend-badge img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+}
+
+.friend-badge span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- 10. Footer --- */
+.main-footer {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* --- 11. Adaptabilidad (Responsiveness) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    .content-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .main-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .card-section {
+        padding: 20px;
+    }
+
+    .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+}
+
+/* --- 12. Estilos del Modal (Pop-up) --- */
+
+/* Fondo oscurecido del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; 
+    z-index: 100; /* Asegura que esté por encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; /* Habilita el scroll si el contenido es grande */
+    background-color: rgba(0, 0, 0, 0.95); /* Fondo muy oscuro */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque sutil (moderno) */
+    animation: fadeIn 0.3s;
+}
+
+/* Contenido (Tarjeta centrada del modal) */
+.modal-content {
+    margin: 5% auto; /* 5% desde arriba, centrado horizontalmente */
+    width: 90%; 
+    max-width: 800px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 196, 0.5); /* Resplandor del acento */
+}
+
+/* Botón de cierre */
+.close-btn {
+    color: var(--accent-color);
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 2%;
+    right: 10px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--text-light);
+}
+
+/* Carrusel y sus elementos */
+.carousel-container {
+    position: relative;
+    max-width: 100%;
+}
+
+.carousel-inner {
+    display: flex;
+    overflow: hidden; /* Oculta los elementos que no son visibles */
+    position: relative;
+    /* Usaremos JavaScript para el desplazamiento */
+}
+
+.carousel-item {
+    min-width: 100%; /* Cada elemento ocupa todo el ancho del contenedor */
+    display: none; /* Oculto por defecto, JS mostrará el activo */
+    text-align: center;
+}
+
+.carousel-item.active {
+    display: block;
+}
+
+.carousel-item img {
+    width: auto;
+    max-width: 100%;
+    max-height: 70vh; /* Máximo 70% de la altura de la vista */
+    border-radius: 8px;
+    object-fit: contain;
+    margin: 20px auto;
+    display: block;
+}
+
+.caption {
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 10px 0;
+}
+
+/* Botones de navegación (anterior/siguiente) */
+.prev-btn, .next-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.next-btn {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: rgba(0, 255, 196, 0.5);
+}
+
+
+/* Animación para la aparición del modal */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+    .prev-btn, .next-btn {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+/* --- 4. Header y Perfil Principal --- */
+.main-header {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    /* REMPLAZA el borde simple por el borde animado */
+    /* border: 1px solid rgba(0, 255, 196, 0.2);  <-- ¡Elimina esta línea! */
+    position: relative; /* Esencial para el pseudo-elemento */
+    overflow: hidden; /* Oculta el brillo que se sale del borde */
+}
+
+/* ------------------------------------- */
+/* --- NUEVO: Estilos y Animación del Borde de Neón --- */
+/* ------------------------------------- */
+
+.main-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%; /* El doble de ancho para que el gradiente se mueva bien */
+    height: 200%; /* El doble de alto */
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            var(--accent-color) 0%,
+            rgba(0, 255, 196, 0.3) 10%,
+            transparent 50%
+        );
+    /* Para el efecto de "2 luces", usamos un gradiente que repite el patrón:
+       [Luz Neón] - [Luz tenue] - [Transparente (Sombra)] - [Luz Neón]...
+    */
+    background-size: 50% 50%; /* Controla el tamaño del patrón repetido */
+    z-index: 0;
+    opacity: 0.5; /* Opacidad para que sea sutil */
+    animation: neon-border-sweep 6s linear infinite; /* Animación de 6 segundos */
+    transform: translate(-25%, -25%) rotate(0deg); /* Posición inicial */
+}
+
+/* El contenido del header debe estar por encima del borde animado */
+.main-header > * {
+    position: relative;
+    z-index: 1; 
+}
+
+
+/* Definición de la animación de barrido */
+@keyframes neon-border-sweep {
+    0% {
+        transform: translate(-25%, -25%) rotate(0deg);
+        /* Mueve el fondo del gradiente de neón */
+    }
+    100% {
+        transform: translate(-25%, -25%) rotate(360deg);
+    }
+}
+
+/* Este estilo vuelve a aplicar el fondo original encima del pseudo-elemento animado, 
+   dejando solo visible el pseudo-elemento en los bordes. */
+.main-header::after {
+    content: '';
+    position: absolute;
+    top: 2px; /* Margen para que el borde se vea */
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background-color: var(--card-bg); /* Fondo de la tarjeta */
+    border-radius: calc(var(--border-radius) - 2px); 
+    z-index: 0; /* Por debajo del contenido, por encima del ::before */
+}
+
+/* ------------------------------------- */
+/* --- NUEVO: Estilos para Efecto de Escritura --- */
+/* ------------------------------------- */
+
+/* Oculta el cursor por defecto para que solo se vea la animación */
+#typing-text {
+    border-right: 2px solid var(--accent-color); /* Cursor */
+    white-space: nowrap; /* Mantiene el texto en una sola línea */
+    overflow: hidden; /* Oculta el texto hasta que se escribe */
+    display: inline-block; /* Necesario para que el border-right funcione como cursor */
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+/* Animación del cursor parpadeante */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-color); }
+}
+
+/* Aplicar la animación de parpadeo al cursor */
+.main-header h1 span {
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Aseguramos que el h1 mantenga el color original si el span está vacío */
+.main-header h1 {
+    font-size: 2.2rem;
+    color: var(--accent-color);
+}
+
+/* ------------------------------------- */
+/* --- NUEVO: Estilos para Efecto Glitch en el Subtítulo --- */
+/* ------------------------------------- */
+
+.subtitle {
+    /* Mantiene los estilos originales */
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-bottom: 20px;
+    
+    /* Prepara el elemento para el glitch */
+    position: relative;
+    display: inline-block; /* Necesario para contener los pseudo-elementos */
+    animation: subtitle-glitch-fade 0.5s steps(2, end) forwards; /* Glitch y fade en 0.5s */
+    opacity: 0; /* Oculto inicialmente para esperar a la animación */
+}
+
+/* Pseudo-elemento para el desplazamiento de color Rojo/Cian (Efecto Glitch) */
+.subtitle::before,
+.subtitle::after {
+    content: attr(data-text); /* Toma el texto del atributo data-text (lo agregaremos en HTML) */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0); /* Oculto por defecto */
+    color: var(--accent-color); /* Color base para los glitcheados */
+}
+
+/* ::before: Desplazamiento Cian (o var(--accent-color)) */
+.subtitle::before {
+    left: 1px; /* Desplazamiento sutil */
+    text-shadow: -2px 0 #00ffff; /* Cian */
+    background-color: transparent;
+    animation: glitch-before 2s infinite alternate-reverse;
+}
+
+/* ::after: Desplazamiento Rojo */
+.subtitle::after {
+    left: -1px; /* Desplazamiento sutil */
+    text-shadow: -2px 0 #ff00ff; /* Rojo/Magenta */
+    background-color: transparent;
+    animation: glitch-after 2s infinite alternate-reverse;
+}
+
+/* Keyframes para el Glitch (Salto de texto rápido) */
+@keyframes glitch-before {
+    0% { clip: rect(40px, 9999px, 80px, 0); }
+    10% { clip: rect(70px, 9999px, 10px, 0); }
+    20% { clip: rect(10px, 9999px, 90px, 0); }
+    30% { clip: rect(50px, 9999px, 10px, 0); }
+    40% { clip: rect(80px, 9999px, 40px, 0); }
+    50% { clip: rect(10px, 9999px, 20px, 0); }
+    /* El glitch dura hasta el 50%, luego se estabiliza */
+    60%, 100% { clip: rect(0, 9999px, 9999px, 0); } /* Visible y normal */
+}
+
+@keyframes glitch-after {
+    0% { clip: rect(5px, 9999px, 30px, 0); }
+    15% { clip: rect(50px, 9999px, 20px, 0); }
+    25% { clip: rect(10px, 9999px, 50px, 0); }
+    35% { clip: rect(20px, 9999px, 60px, 0); }
+    45% { clip: rect(30px, 9999px, 70px, 0); }
+    /* El glitch dura hasta el 50%, luego se estabiliza */
+    50%, 100% { clip: rect(0, 9999px, 9999px, 0); } /* Visible y normal */
+}
+
+/* Animación principal que lo trae y lo estabiliza */
+@keyframes subtitle-glitch-fade {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; }
+    50% { transform: translateY(0); }
+    /* Detenemos la animación base, pero los ::before y ::after continúan su animación de glitch-before/after */
+    100% { opacity: 1; } 
+}
+/* Modificación en styles.css */
+.subtitle {
+    /* ... otros estilos ... */
+    
+    /* RETRASO AÑADIDO (1.8s después de empezar a escribir Rayko) */
+    animation: subtitle-glitch-fade 0.5s steps(2, end) 1.8s forwards; 
+    opacity: 0; /* Asegura que comienza oculto */
+}
