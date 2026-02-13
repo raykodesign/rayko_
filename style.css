@@ -29,7 +29,7 @@ body {
     min-height: 100vh; 
     overflow: auto; 
     overflow-x: hidden; 
-    MARGIN: 40px 0;
+    MARGIN: 50px 0;
 }
 
 /* FONDO EN MOVIMIENTO CONSTANTE */
@@ -479,4 +479,5 @@ body {
 
 h6{
     color: #555;
+
 }
