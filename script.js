@@ -128,50 +128,53 @@ window.filterPcback = function(category, element) {
 
 // REEMPLAZA TU FUNCIÓN openModal ACTUAL POR ESTA:
 
+// MODAL INTELIGENTE (Detecta Imagen o Video)
 window.openModal = function(src, caption) {
     const modal = document.getElementById('imageModal');
-    
-    // Elementos posibles
     const modalImg = document.getElementById('modalImg');
-    const modalVideo = document.getElementById('modalVideo'); // El nuevo video
+    const modalVideo = document.getElementById('modalVideo');
     const dualContainer = document.getElementById('modalDualContainer');
     const captionText = document.getElementById('caption');
     
     if(modal) {
         modal.style.display = "flex";
         
-        // 1. Ocultar el modo "Fondo Doble" por si acaso estaba abierto
+        // 1. Ocultar contenedores que no se usen
         if(dualContainer) dualContainer.classList.add('hidden');
         
-        // 2. ¿Es un VIDEO? (Detectamos si termina en .mp4)
+        // 2. Detectar si es VIDEO (.mp4)
         if (src.toLowerCase().endsWith('.mp4')) {
-            // Ocultamos la imagen
             if(modalImg) modalImg.style.display = "none";
             
-            // Mostramos y reproducimos el video
             if(modalVideo) {
                 modalVideo.style.display = "block";
                 modalVideo.src = src;
-                modalVideo.play(); 
+                modalVideo.play(); // Reproducir al abrir
+
+                // === NUEVO: Clic en el video para Pausar/Reproducir ===
+                modalVideo.onclick = function(e) {
+                    e.stopPropagation(); // Evita que se cierre el modal al hacer click
+                    if (modalVideo.paused) {
+                        modalVideo.play();
+                    } else {
+                        modalVideo.pause();
+                    }
+                };
             }
-        } 
-        // 3. Entonces es una IMAGEN
-        else {
-            // Ocultamos y pausamos el video
+        } else {
+            // Es IMAGEN
             if(modalVideo) {
                 modalVideo.style.display = "none";
                 modalVideo.pause();
                 modalVideo.src = "";
             }
-            
-            // Mostramos la imagen
             if(modalImg) {
                 modalImg.style.display = "block";
                 modalImg.src = src;
             }
         }
 
-        // Poner el texto
+        // 3. Poner título
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
@@ -244,4 +247,5 @@ function dragElement(elmnt) {
     }
 
 }
+
 
