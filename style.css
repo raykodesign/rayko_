@@ -490,3 +490,34 @@ h6{
 
 }
 
+/* === PROTECCIÓN CONTRA COPIA Y ARRASTRE === */
+
+/* 1. Desactivar selección de texto en TODO el sitio */
+* {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Estándar */
+    
+    -webkit-user-drag: none;   /* Evita arrastrar elementos (Webkit) */
+}
+
+/* 2. Forzar que el cursor sea siempre flecha (no texto) */
+html, body, p, h1, h2, h3, h4, h5, h6, span, div, img {
+    cursor: default;
+}
+
+/* 3. PERO... devolver la "manito" a lo que sí es clicable */
+a, button, .tilt-card, .gallery-tile, .nav-item, .ctrl-btn, .close-btn, input[type="range"], .menu-btn, .radio-pack, .rp-btn, .fondo-item, video {
+    cursor: pointer !important;
+}
+
+/* 4. Evitar que las imágenes se pongan azules al intentar seleccionarlas */
+img {
+    pointer-events: none; /* Ignora clicks en la imagen (para arrastrar) */
+}
+
+/* Excepción: Si necesitas click en imágenes (como tus galerías), usa esto en su lugar: */
+.gallery-tile img, .fondo-item img, .xs-img img, .modal-content {
+    pointer-events: auto; /* Reactivar clicks para que funcionen tus modales */
+}
