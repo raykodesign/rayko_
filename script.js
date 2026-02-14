@@ -149,11 +149,15 @@ window.openModal = function(src, caption) {
             if(modalVideo) {
                 modalVideo.style.display = "block";
                 modalVideo.src = src;
-                modalVideo.play(); // Reproducir al abrir
+                
+                // === FUERZA BRUTA: OBLIGAR SILENCIO ===
+                modalVideo.muted = true; // <--- Agrega esta línea
+                
+                modalVideo.play(); 
 
-                // === NUEVO: Clic en el video para Pausar/Reproducir ===
+                // Clic para pausar/reproducir
                 modalVideo.onclick = function(e) {
-                    e.stopPropagation(); // Evita que se cierre el modal al hacer click
+                    e.stopPropagation(); 
                     if (modalVideo.paused) {
                         modalVideo.play();
                     } else {
@@ -247,5 +251,6 @@ function dragElement(elmnt) {
     }
 
 }
+
 
 
