@@ -126,60 +126,70 @@ window.filterPcback = function(category, element) {
     }
 };
 
-// MODAL INTELIGENTE (Detecta Imagen o Video)
+// REEMPLAZA TU FUNCIÓN openModal ACTUAL POR ESTA:
+
 window.openModal = function(src, caption) {
     const modal = document.getElementById('imageModal');
+    
+    // Elementos posibles
     const modalImg = document.getElementById('modalImg');
-    const modalVideo = document.getElementById('modalVideo'); // Nuevo elemento
+    const modalVideo = document.getElementById('modalVideo'); // El nuevo video
     const dualContainer = document.getElementById('modalDualContainer');
     const captionText = document.getElementById('caption');
     
     if(modal) {
         modal.style.display = "flex";
         
-        // 1. Ocultar contenedores que no se usen
+        // 1. Ocultar el modo "Fondo Doble" por si acaso estaba abierto
         if(dualContainer) dualContainer.classList.add('hidden');
         
-        // 2. Detectar si es VIDEO (.mp4) o IMAGEN
+        // 2. ¿Es un VIDEO? (Detectamos si termina en .mp4)
         if (src.toLowerCase().endsWith('.mp4')) {
-            // Es video
+            // Ocultamos la imagen
             if(modalImg) modalImg.style.display = "none";
+            
+            // Mostramos y reproducimos el video
             if(modalVideo) {
                 modalVideo.style.display = "block";
                 modalVideo.src = src;
-                modalVideo.play(); // Reproducir automáticamente al abrir
+                modalVideo.play(); 
             }
-        } else {
-            // Es imagen normal
+        } 
+        // 3. Entonces es una IMAGEN
+        else {
+            // Ocultamos y pausamos el video
             if(modalVideo) {
                 modalVideo.style.display = "none";
-                modalVideo.pause(); // Pausar video anterior si había
+                modalVideo.pause();
                 modalVideo.src = "";
             }
+            
+            // Mostramos la imagen
             if(modalImg) {
                 modalImg.style.display = "block";
                 modalImg.src = src;
             }
         }
 
-        // 3. Poner título
+        // Poner el texto
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
 
-// Actualizar closeModal para detener el video al cerrar
+// TAMBIÉN ACTUALIZA closeModal PARA QUE EL VIDEO SE CALLE AL CERRAR
 window.closeModal = function() {
     const modal = document.getElementById('imageModal');
     if(modal) {
         modal.style.display = "none";
         
-        const modalImg = document.getElementById('modalImg');
         const modalVideo = document.getElementById('modalVideo');
+        const modalImg = document.getElementById('modalImg');
         
-        if(modalImg) modalImg.src = "";
+        if(modalImg) modalImg.src = ""; // Limpiar imagen
+        
         if(modalVideo) {
-            modalVideo.pause();
-            modalVideo.src = ""; // Limpiar fuente
+            modalVideo.pause(); // ¡Importante! Parar el sonido
+            modalVideo.src = ""; // Quitar el video
         }
     }
 };
@@ -234,3 +244,4 @@ function dragElement(elmnt) {
     }
 
 }
+
