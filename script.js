@@ -138,36 +138,33 @@ window.openModal = function(src, caption) {
     
     if(modal) {
         modal.style.display = "flex";
-        
-        // 1. Ocultar contenedores que no se usen
         if(dualContainer) dualContainer.classList.add('hidden');
         
-        // 2. Detectar si es VIDEO (.mp4)
-        if (src.toLowerCase().endsWith('.mp4')) {
+        // === CAMBIO IMPORTANTE AQUÍ ===
+        // Ahora aceptamos .mp4 O .webm
+        const isVideo = src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm');
+
+        if (isVideo) {
+            // Es video (MP4 o WEBM)
             if(modalImg) modalImg.style.display = "none";
             
             if(modalVideo) {
                 modalVideo.style.display = "block";
                 modalVideo.src = src;
+                modalVideo.muted = true; // Forzar silencio
+                modalVideo.play();
                 
-                // === FUERZA BRUTA: OBLIGAR SILENCIO ===
-                modalVideo.muted = true; // <--- Agrega esta línea
-                
-                modalVideo.play(); 
-
-                // Clic para pausar/reproducir
+                // Click para pausar/reproducir
                 modalVideo.onclick = function(e) {
                     e.stopPropagation(); 
-                    if (modalVideo.paused) {
-                        modalVideo.play();
-                    } else {
-                        modalVideo.pause();
-                    }
+                    if (modalVideo.paused) modalVideo.play();
+                    else modalVideo.pause();
                 };
             }
         } else {
-            // Es IMAGEN
-            if(modalVideo) {
+            // Es IMAGEN (Todo lo demás)
+            // ... (el resto del código de imagen sigue igual) ...
+             if(modalVideo) {
                 modalVideo.style.display = "none";
                 modalVideo.pause();
                 modalVideo.src = "";
@@ -178,7 +175,6 @@ window.openModal = function(src, caption) {
             }
         }
 
-        // 3. Poner título
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
@@ -251,6 +247,7 @@ function dragElement(elmnt) {
     }
 
 }
+
 
 
 
