@@ -126,61 +126,64 @@ window.filterPcback = function(category, element) {
     }
 };
 
-// MODAL ESTÁNDAR (1 IMAGEN)
+// MODAL INTELIGENTE (Detecta Imagen o Video)
 window.openModal = function(src, caption) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
+    const modalVideo = document.getElementById('modalVideo'); // Nuevo elemento
     const dualContainer = document.getElementById('modalDualContainer');
-    const captionText = document.getElementById('caption'); // Faltaba esto en algunas versiones
+    const captionText = document.getElementById('caption');
     
-    if(modal && modalImg) {
+    if(modal) {
         modal.style.display = "flex";
         
-        // Mostrar imagen simple, ocultar dual
-        modalImg.style.display = "block";
+        // 1. Ocultar contenedores que no se usen
         if(dualContainer) dualContainer.classList.add('hidden');
         
-        modalImg.src = src;
-        // Si hay caption lo pone, si no, lo deja vacío
-        if(captionText) captionText.innerHTML = caption || ''; 
-    }
-};
+        // 2. Detectar si es VIDEO (.mp4) o IMAGEN
+        if (src.toLowerCase().endsWith('.mp4')) {
+            // Es video
+            if(modalImg) modalImg.style.display = "none";
+            if(modalVideo) {
+                modalVideo.style.display = "block";
+                modalVideo.src = src;
+                modalVideo.play(); // Reproducir automáticamente al abrir
+            }
+        } else {
+            // Es imagen normal
+            if(modalVideo) {
+                modalVideo.style.display = "none";
+                modalVideo.pause(); // Pausar video anterior si había
+                modalVideo.src = "";
+            }
+            if(modalImg) {
+                modalImg.style.display = "block";
+                modalImg.src = src;
+            }
+        }
 
-// NUEVO: MODAL PARA FONDOS (2 IMÁGENES)
-window.openFondoModal = function(bgSrc, boxSrc, caption) {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImg'); 
-    const dualContainer = document.getElementById('modalDualContainer');
-    const modalBg = document.getElementById('modalBg');
-    const modalBox = document.getElementById('modalBox');
-    
-    // === AQUÍ ESTABA EL ERROR: Faltaba definir esta variable ===
-    const captionText = document.getElementById('caption'); 
-
-    if(modal && dualContainer) {
-        modal.style.display = "flex";
-        
-        // Ocultar imagen simple, mostrar dual
-        if(modalImg) modalImg.style.display = "none";
-        dualContainer.classList.remove('hidden');
-        
-        // Asignar fuentes
-        if(modalBg) modalBg.src = bgSrc;
-        if(modalBox) modalBox.src = boxSrc;
-        
-        // Asignar título (o vacío si no se envía)
+        // 3. Poner título
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
 
+// Actualizar closeModal para detener el video al cerrar
 window.closeModal = function() {
     const modal = document.getElementById('imageModal');
     if(modal) {
         modal.style.display = "none";
+        
         const modalImg = document.getElementById('modalImg');
-        if(modalImg) modalImg.src = ""; // Limpiar src
+        const modalVideo = document.getElementById('modalVideo');
+        
+        if(modalImg) modalImg.src = "";
+        if(modalVideo) {
+            modalVideo.pause();
+            modalVideo.src = ""; // Limpiar fuente
+        }
     }
 };
+
 
 window.onclick = function(event) {
     const modal = document.getElementById('imageModal');
@@ -229,4 +232,5 @@ function dragElement(elmnt) {
         document.onmouseup = null;
         document.onmousemove = null;
     }
+
 }
