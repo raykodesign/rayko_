@@ -129,10 +129,11 @@ window.filterPcback = function(category, element) {
 // REEMPLAZA TU FUNCIÓN openModal ACTUAL POR ESTA:
 
 // MODAL INTELIGENTE (Detecta Imagen o Video)
-window.openModal = function(src, caption) {
+{
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const modalVideo = document.getElementById('modalVideo');
+    const modalIframe = document.getElementById('modalIframe'); // Nuevo
     const dualContainer = document.getElementById('modalDualContainer');
     const captionText = document.getElementById('caption');
     
@@ -140,34 +141,46 @@ window.openModal = function(src, caption) {
         modal.style.display = "flex";
         if(dualContainer) dualContainer.classList.add('hidden');
         
-        // === CAMBIO IMPORTANTE AQUÍ ===
-        // Ahora aceptamos .mp4 O .webm
         const isVideo = src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm');
+        const isIframe = src.toLowerCase().endsWith('.html') || src.includes('xatradio'); // Detección de link
 
         if (isVideo) {
-            // Es video (MP4 o WEBM)
             if(modalImg) modalImg.style.display = "none";
+            if(modalIframe) { modalIframe.style.display = "none"; modalIframe.src = ""; }
             
             if(modalVideo) {
                 modalVideo.style.display = "block";
                 modalVideo.src = src;
-                modalVideo.muted = true; // Forzar silencio
+                modalVideo.muted = true; 
                 modalVideo.play();
-                
-                // Click para pausar/reproducir
                 modalVideo.onclick = function(e) {
                     e.stopPropagation(); 
                     if (modalVideo.paused) modalVideo.play();
                     else modalVideo.pause();
                 };
             }
-        } else {
-            // Es IMAGEN (Todo lo demás)
-            // ... (el resto del código de imagen sigue igual) ...
-             if(modalVideo) {
+        } else if (isIframe) {
+            // Es un iframe web (.html)
+            if(modalImg) modalImg.style.display = "none";
+            if(modalVideo) {
                 modalVideo.style.display = "none";
                 modalVideo.pause();
                 modalVideo.src = "";
+            }
+            if(modalIframe) {
+                modalIframe.style.display = "block";
+                modalIframe.src = src;
+            }
+        } else {
+            // Es IMAGEN
+            if(modalVideo) {
+                modalVideo.style.display = "none";
+                modalVideo.pause();
+                modalVideo.src = "";
+            }
+            if(modalIframe) {
+                modalIframe.style.display = "none";
+                modalIframe.src = "";
             }
             if(modalImg) {
                 modalImg.style.display = "block";
@@ -178,7 +191,6 @@ window.openModal = function(src, caption) {
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
-
 // TAMBIÉN ACTUALIZA closeModal PARA QUE EL VIDEO SE CALLE AL CERRAR
 window.closeModal = function() {
     const modal = document.getElementById('imageModal');
@@ -187,16 +199,21 @@ window.closeModal = function() {
         
         const modalVideo = document.getElementById('modalVideo');
         const modalImg = document.getElementById('modalImg');
+        const modalIframe = document.getElementById('modalIframe'); // Nuevo
         
-        if(modalImg) modalImg.src = ""; // Limpiar imagen
+        if(modalImg) modalImg.src = ""; 
         
         if(modalVideo) {
-            modalVideo.pause(); // ¡Importante! Parar el sonido
-            modalVideo.src = ""; // Quitar el video
+            modalVideo.pause(); 
+            modalVideo.src = ""; 
+        }
+
+        if(modalIframe) {
+            modalIframe.src = ""; // Cortar la música al cerrar
+            modalIframe.style.display = "none";
         }
     }
 };
-
 
 window.onclick = function(event) {
     const modal = document.getElementById('imageModal');
