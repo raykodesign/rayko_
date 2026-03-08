@@ -128,12 +128,12 @@ window.filterPcback = function(category, element) {
 
 // REEMPLAZA TU FUNCIÓN openModal ACTUAL POR ESTA:
 
-// MODAL INTELIGENTE (Detecta Imagen o Video)
-{
+// MODAL INTELIGENTE (Detecta Imagen, Video o HTML/Iframe)
+window.openModal = function(src, caption) {
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
     const modalVideo = document.getElementById('modalVideo');
-    const modalIframe = document.getElementById('modalIframe'); // Nuevo
+    const modalIframe = document.getElementById('modalIframe'); 
     const dualContainer = document.getElementById('modalDualContainer');
     const captionText = document.getElementById('caption');
     
@@ -142,7 +142,7 @@ window.filterPcback = function(category, element) {
         if(dualContainer) dualContainer.classList.add('hidden');
         
         const isVideo = src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.webm');
-        const isIframe = src.toLowerCase().endsWith('.html') || src.includes('xatradio'); // Detección de link
+        const isIframe = src.toLowerCase().endsWith('.html') || src.includes('xatradio'); 
 
         if (isVideo) {
             if(modalImg) modalImg.style.display = "none";
@@ -160,7 +160,6 @@ window.filterPcback = function(category, element) {
                 };
             }
         } else if (isIframe) {
-            // Es un iframe web (.html)
             if(modalImg) modalImg.style.display = "none";
             if(modalVideo) {
                 modalVideo.style.display = "none";
@@ -172,7 +171,6 @@ window.filterPcback = function(category, element) {
                 modalIframe.src = src;
             }
         } else {
-            // Es IMAGEN
             if(modalVideo) {
                 modalVideo.style.display = "none";
                 modalVideo.pause();
@@ -191,7 +189,7 @@ window.filterPcback = function(category, element) {
         if(captionText) captionText.innerHTML = caption || '';
     }
 };
-// TAMBIÉN ACTUALIZA closeModal PARA QUE EL VIDEO SE CALLE AL CERRAR
+
 window.closeModal = function() {
     const modal = document.getElementById('imageModal');
     if(modal) {
@@ -199,7 +197,7 @@ window.closeModal = function() {
         
         const modalVideo = document.getElementById('modalVideo');
         const modalImg = document.getElementById('modalImg');
-        const modalIframe = document.getElementById('modalIframe'); // Nuevo
+        const modalIframe = document.getElementById('modalIframe'); 
         
         if(modalImg) modalImg.src = ""; 
         
@@ -209,16 +207,9 @@ window.closeModal = function() {
         }
 
         if(modalIframe) {
-            modalIframe.src = ""; // Cortar la música al cerrar
+            modalIframe.src = ""; 
             modalIframe.style.display = "none";
         }
-    }
-};
-
-window.onclick = function(event) {
-    const modal = document.getElementById('imageModal');
-    if (event.target == modal) {
-        window.closeModal();
     }
 };
 
@@ -264,6 +255,7 @@ function dragElement(elmnt) {
     }
 
 }
+
 
 
 
