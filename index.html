@@ -15,13 +15,14 @@
         <div class="vignette"></div>
     </div>
 
-    <div id="imageModal" class="modal-overlay" onclick="closeModal()">
+   <div id="imageModal" class="modal-overlay" onclick="closeModal()">
         <span class="close-btn">&times;</span>
         
         <img class="modal-content" id="modalImg">
         <video class="modal-content" id="modalVideo" autoplay loop muted playsinline style="display:none;"></video>
         <iframe class="modal-content" id="modalIframe" style="display:none; width: 90%; max-width: 350px; height: 80vh; max-height: 500px; border: none; border-radius: 12px; background: #000;"></iframe>
-            <div id="modalDualContainer" class="dual-view hidden">
+        
+        <div id="modalDualContainer" class="dual-view hidden">
             <div class="dual-item">
                 <span>FONDO</span>
                 <img id="modalBg" src="" alt="Fondo">
@@ -454,17 +455,18 @@
                 </div>
             </section>
 
-            <section id="view-repro" class="view">
+           <section id="view-repro" class="view">
                 <h2 class="section-title">REPRODUCTORES</h2>
                 <div class="repro-grid">
                     
                     <div class="repro-item tilt-card" onclick="openModal('https://xatradio.com/player/yxvrgvvfesb.html', 'Player V1')">
-    <div class="gif-box" style="position: relative; overflow: hidden; height: 150px; pointer-events: none; border-radius: 10px;">
-        <iframe src="https://xatradio.com/player/yxvrgvvfesb.html" frameborder="0" style="position: absolute; top: 0; left: 0; width: 200%; height: 300px; transform: scale(0.5); transform-origin: top left; border: none;"></iframe>
-    </div>
-    <div class="item-footer"><span>XatFlow</span> <strong>2500 xats</strong></div>
-</div>
-                    
+                        <div class="gif-box" style="position: relative; overflow: hidden; height: 150px; pointer-events: none; border-radius: 10px;">
+                            <iframe src="https://xatradio.com/player/yxvrgvvfesb.html" frameborder="0" style="position: absolute; top: 0; left: 0; width: 200%; height: 300px; transform: scale(0.5); transform-origin: top left; border: none;"></iframe>
+                        </div>
+                        <div class="item-footer"><span>XatFlow</span> <strong>2500 xats</strong></div>
+                    </div>
+
+                </div>
             </section>
 
             <section id="view-radio-plans" class="view">
@@ -553,6 +555,7 @@
 </body>
 
 </html>
+
 
 
 
